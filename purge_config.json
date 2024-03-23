@@ -1,0 +1,20 @@
+{
+    "config": {
+        "bucket": "bucket",
+        "key": "aws key",
+        "secret": "aws secret",
+        "server": "s3.{region}.amazonaws.com",
+        "project": "project name"
+    },
+    "autoexplore": "true",
+    "default_logs_paths": [],
+    "services": [
+        {
+            "service": "application name",
+            "log_path": "../logs",
+            "pattern": "^service.log-.+",
+            "compress": "true",
+            "RemoveOnTransfer": "true"
+        }
+    ]
+  }
