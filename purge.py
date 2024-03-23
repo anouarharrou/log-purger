@@ -9,10 +9,8 @@ if py_version == 3:
     from subprocess import PIPE, run
 elif py_version == 2:
     from subprocess import PIPE, Popen
-import shlex
 import re
 import platform
-import urllib3
 
 
 
