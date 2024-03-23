@@ -12,6 +12,7 @@ elif py_version == 2:
 import shlex
 import re
 import platform
+import urllib3
 
 
 
@@ -38,7 +39,7 @@ import platform
 
 __APP_NAME = "purge"
 __VERSION = "1.0.0"
-__GITHUB = "https://github.com/anouarharrou/log-purger/purge.py"
+__GITHUB = "https://github.com/anouarharrou/log-purger/blob/main/purge.py"
 __AUTO_UPDATE = True
 __PURGE_CONFIG_FILE = "./purge_config.json"
 __DEFAULT_PATH = "/home/devops"
@@ -68,19 +69,20 @@ print("\033[92m")  # ANSI escape code for green color
 print("🟢🤖 I Live in your Server now 🤖🟢")
 print("\033[90m")  # ANSI escape code for grey color for the rest 
 
-
 def update_purge():
     if not __AUTO_UPDATE:
         return False
     __latest_version = "0.0.0"
     try:
-        response = requests.get(__GITHUB, verify=False)
-    except:
-        print_log("Cant reach: {}  [Skip]".format(__GITHUB), print_only = True)
+        response = requests.get(__GITHUB, verify=True)
+        response.raise_for_status()  # Raise an HTTPError for bad responses
+    except requests.RequestException as e:
+        print_log("Error fetching latest version: {}".format(e), print_only=True)
         return False
-    print_log("Current version: {}".format(__VERSION), print_only = True)
+
+    print_log("Current version: {}".format(__VERSION), print_only=True)
     if response.status_code == 200:
-        print_log("Fetch {} [ OK ]".format(__GITHUB), print_only = True)
+        print_log("Fetch {} [ OK ]".format(__GITHUB), print_only=True)
         for ln in response.text.split("\n"):
             reg = re.search(r"^__VERSION.+", ln)
             if reg:
@@ -91,13 +93,13 @@ def update_purge():
         except:
             __latest_version = "0.0.0"
         if __latest_version != __VERSION:
-            print_log("save {} version {} this new version will be executed next time".format(__APP_NAME, __latest_version), print_only = True)
+            print_log("Save {} version {} this new version will be executed next time".format(__APP_NAME, __latest_version), print_only=True)
             with open('./purge.py', 'wb') as purge:
                 purge.write(response.content)
         else:
-            print_log("{} already uptodate".format(__APP_NAME), print_only = True)
+            print_log("{} already up-to-date".format(__APP_NAME), print_only=True)
     else:
-        print_log("Fetch {} [ FAIL ]".format(__GITHUB), print_only = True)
+        print_log("Fetch {} [ FAIL ]".format(__GITHUB), print_only=True)
 
 
 def print_log(str_print = "", log_date = True, print_only = False):
