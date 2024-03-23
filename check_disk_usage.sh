@@ -4,25 +4,16 @@
 send_email_notification() {
     MESSAGE_BODY="Filesystem usage is over 80%. The Purge has been triggered."
     EMAIL_SUBJECT="Alert: Filesystem Usage is more than 80%"
-    FROM_EMAIL_ADDRESS=""
-    FRIENDLY_NAME="NO Reply test"
+    FROM_EMAIL_ADDRESS="you email"  # Update with your Gmail address
+    FRIENDLY_NAME="No Reply Test"
     SMTP_SERVER="smtp.gmail.com"
     SMTP_PORT="587"
-    SMTP_USER=""
-    SMTP_PASS=""
-    TO_EMAIL_ADDRESS=""
+    SMTP_USER="you email"  # Update with your Gmail address
+    SMTP_PASS=""  # Update with your Gmail app password
+    TO_EMAIL_ADDRESS=""  # Update with recipient's email address
     FILEPATH="purge.log"
 
-    echo "$MESSAGE_BODY" | mailx -v -s "$EMAIL_SUBJECT" \
-    -S smtp-use-starttls \
-    -S smtp-auth=login \
-    -S smtp=smtp://$SMTP_SERVER:$SMTP_PORT \
-    -S from="$FROM_EMAIL_ADDRESS($FRIENDLY_NAME)" \
-    -S smtp-auth-user=$SMTP_USER \
-    -S smtp-auth-password=$SMTP_PASS \
-    -S ssl-verify=ignore \
-    -a $FILEPATH \
-    $TO_EMAIL_ADDRESS
+    echo -e "Subject: $EMAIL_SUBJECT\n\n$MESSAGE_BODY" | mailx -a $FILEPATH -S smtp-use-starttls -S smtp-auth=login -S smtp=smtp://$SMTP_SERVER:$SMTP_PORT -S from="$FROM_EMAIL_ADDRESS($FRIENDLY_NAME)" -S smtp-auth-user=$SMTP_USER -S smtp-auth-password=$SMTP_PASS -S ssl-verify=ignore $TO_EMAIL_ADDRESS
 }
 
 # Function to log messages
@@ -59,7 +50,7 @@ THRESHOLD=80
 
 # Check if disk usage exceeds the threshold
 if [ "$DISK_USAGE" -gt "$THRESHOLD" ]; then
-    echo "Filesystem usage is over 80%. Triggering another script..." | tee -a purge.log
+    echo "Filesystem usage is over 80%. Triggering Purge script..." | tee -a purge.log
     # Call your other script here
     cd ./ && /usr/bin/python3 purge.py
     # Send email notification
