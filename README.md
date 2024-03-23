@@ -24,7 +24,7 @@ Log Purger automates the process of compressing and transferring log files from 
 4. Monitor the console or log files for status updates and logs uploaded to the S3 bucket.
 
 ## Contributors
-- 🙋‍♂️ [Your Name](link to your GitHub profile)
+- 🙋‍♂️ [Anouar HARROU](https://github.com/anouarharrou)
 
 ## License
-This project is licensed under the [MIT License](link to license file).
+This project is licensed under the [MIT License](LICENSE).
