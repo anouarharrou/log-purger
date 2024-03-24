@@ -109,7 +109,6 @@ def update_purge():
         print_log("Fetch {} [ FAIL ]".format(__GITHUB), print_only=True)
 
 
-
 def print_log(str_print = "", log_date = True, print_only = False):
     dt_now = datetime.now()
     date_time = dt_now.strftime("%m/%d/%Y - %H:%M:%S")
