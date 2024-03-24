@@ -9,7 +9,7 @@
     "services": [
         {
             "service": "application name",
-            "log_path": "../logs",
+            "log_path": "path/to/logs",
             "pattern": "^service.log-.+",
             "compress": "true",
             "RemoveOnTransfer": "true"
