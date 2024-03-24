@@ -63,7 +63,7 @@ If you are using Google SMTP for email notifications, follow these steps:
 
 ```bash
 # Run check_disk_usage.sh script daily at 12 PM
-0 12 * * * /path/to/check_disk_usage.sh
+0 12    * * *   root   /path/to/check_disk_usage.sh
 ```
 
 ## Important Note
