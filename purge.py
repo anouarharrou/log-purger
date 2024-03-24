@@ -36,7 +36,7 @@ import random
 
 
 __APP_NAME = "purge"
-__VERSION = "1.0.0"
+__VERSION = "1.0.1"
 __GITHUB = "https://raw.githubusercontent.com/anouarharrou/log-purger/main/purge.py"
 __AUTO_UPDATE = True
 __PURGE_CONFIG_FILE = "./purge_config.json"
