@@ -11,7 +11,7 @@ elif py_version == 2:
     from subprocess import PIPE, Popen
 import re
 import platform
-
+import random
 
 
 # $$$$$$$\  $$$$$$$$\ $$\    $$\  $$$$$$\  $$$$$$$\   $$$$$$\  
@@ -37,7 +37,7 @@ import platform
 
 __APP_NAME = "purge"
 __VERSION = "1.0.0"
-__GITHUB = "https://github.com/anouarharrou/log-purger/blob/main/purge.py"
+__GITHUB = "https://raw.githubusercontent.com/anouarharrou/log-purger/main/purge.py"
 __AUTO_UPDATE = True
 __PURGE_CONFIG_FILE = "./purge_config.json"
 __DEFAULT_PATH = "/home/devops"
@@ -67,37 +67,48 @@ print("\033[92m")  # ANSI escape code for green color
 print("🟢🤖 I Live in your Server now 🤖🟢")
 print("\033[90m")  # ANSI escape code for grey color for the rest 
 
+
+
 def update_purge():
     if not __AUTO_UPDATE:
         return False
-    __latest_version = "0.0.0"
+
     try:
-        response = requests.get(__GITHUB, verify=True)
+        # Add Cache-Control header to avoid cached versions
+        response = requests.get(__GITHUB, verify=True, headers={'Cache-Control': 'no-cache'})
         response.raise_for_status()  # Raise an HTTPError for bad responses
     except requests.RequestException as e:
         print_log("Error fetching latest version: {}".format(e), print_only=True)
         return False
 
     print_log("Current version: {}".format(__VERSION), print_only=True)
+
     if response.status_code == 200:
         print_log("Fetch {} [ OK ]".format(__GITHUB), print_only=True)
-        for ln in response.text.split("\n"):
-            reg = re.search(r"^__VERSION.+", ln)
-            if reg:
-                __latest_version = ln
-                break
+
         try:
-            __latest_version = re.sub('=|"', "", str(__latest_version)).split()[-1]
-        except:
-            __latest_version = "0.0.0"
-        if __latest_version != __VERSION:
-            print_log("Save {} version {} this new version will be executed next time".format(__APP_NAME, __latest_version), print_only=True)
-            with open('./purge.py', 'wb') as purge:
-                purge.write(response.content)
+            # Extract remote version line (strip extra spaces)
+            remote_version_line = next(ln.strip() for ln in response.text.split("\n") if ln.startswith("__VERSION"))
+            # Extract version using regular expression (remove quotes and surrounding spaces)
+            remote_version = re.sub(r"^__VERSION\s*=\s*['\"]([^'\"]*)['\"]", r"\1", remote_version_line)
+        except StopIteration:
+            print_log("Remote version not found. Skipping update.", print_only=True)
+            return
+
+        # Check for exact version match (including whitespace)
+        if remote_version.strip() != __VERSION.strip():
+            print_log("Local version ({}) is different from remote version ({}). Updating...".format(__VERSION, remote_version), print_only=True)
+            new_script_content = response.content.decode('utf-8')
+
+            with open('./purge.py', 'w') as updated_script:
+                updated_script.write(new_script_content)
+
+            print_log("Script updated to version {}".format(remote_version), print_only=True)
         else:
             print_log("{} already up-to-date".format(__APP_NAME), print_only=True)
     else:
         print_log("Fetch {} [ FAIL ]".format(__GITHUB), print_only=True)
+
 
 
 def print_log(str_print = "", log_date = True, print_only = False):

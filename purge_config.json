@@ -6,8 +6,6 @@
         "server": "s3.{region}.amazonaws.com",
         "project": "project name"
     },
-    "autoexplore": "true",
-    "default_logs_paths": [],
     "services": [
         {
             "service": "application name",

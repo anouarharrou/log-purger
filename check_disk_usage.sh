@@ -55,4 +55,11 @@ if [ "$DISK_USAGE" -gt "$THRESHOLD" ]; then
     cd ./ && /usr/bin/python3 purge.py
     # Send email notification
     send_email_notification
+    email=true
+fi
+
+if [ "$email" != false ]; then 
+   echo "Email sent successfully" | tee -a purge.log
+else 
+   echo "Email not sent" | tee -a purge.log
 fi
