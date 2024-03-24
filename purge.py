@@ -342,7 +342,7 @@ for service in services:
         if upload_to_s3_cmd != False:
             upload_status = upload_cmd(upload_to_s3_cmd)
             if upload_to_s3_bucket == SUCCESS:
-                print_log("📤 {}/{} uploaded to S3 bucket: {} in path: {}  with [ SUCCESS ]".format(
+                print_log("📤 {}/{} uploaded to S3 bucket: {} in path: {}  with [ \033[92mSUCCESS\033[0m ]".format(
                     log_path,
                     target,
                     BUCKET,
@@ -356,7 +356,7 @@ for service in services:
                     except:
                         print_log("❌ RemoveOnTransfert = {} [ERROR WHEN EXECUTING RM COMMAND]".format(RemoveOnTransfert))  # Emoji for failure and red color
             else:
-                print_log("❌ {}/{} uploaded to S3 bucket: {} in path: {}  [ FAILED ]".format(
+                print_log("❌ {}/{} uploaded to S3 bucket: {} in path: {}  [ \033[93mFAILED\033[0m ]".format(
                     log_path,
                     target,
                     BUCKET,
