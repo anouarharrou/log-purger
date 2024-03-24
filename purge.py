@@ -70,7 +70,7 @@ print("\033[90m")  # ANSI escape code for grey color for the rest
 def update_purge():
     if not __AUTO_UPDATE:
         return False
-    __latest_version = "0.0.0"
+    __latest_version = "1.0.0"
     try:
         response = requests.get(__GITHUB, verify=True)
         response.raise_for_status()  # Raise an HTTPError for bad responses
