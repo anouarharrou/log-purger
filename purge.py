@@ -68,7 +68,6 @@ print("🟢🤖 I Live in your Server now 🤖🟢")
 print("\033[90m")  # ANSI escape code for grey color for the rest 
 
 
-
 def update_purge():
     if not __AUTO_UPDATE:
         return False
