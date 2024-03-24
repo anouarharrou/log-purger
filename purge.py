@@ -36,7 +36,7 @@ import random
 
 
 __APP_NAME = "purge"
-__VERSION = "1.0.1"
+__VERSION = "1.0.2"
 __GITHUB = "https://raw.githubusercontent.com/anouarharrou/log-purger/main/purge.py"
 __AUTO_UPDATE = True
 __PURGE_CONFIG_FILE = "./purge_config.json"
@@ -64,9 +64,8 @@ original_path = ""
 
 
 print("\033[92m")  # ANSI escape code for green color
-print("🟢🤖 I Live in your Server now 🤖🟢")
-print("\033[90m")  # ANSI escape code for grey color for the rest 
-
+print("🟢🤖 Hello! I'm Purge bot 🤖🟢")
+print("🟢🤖 I Live in your Server Now 🤖🟢")
 
 def update_purge():
     if not __AUTO_UPDATE:
@@ -175,9 +174,14 @@ SECRET = config["secret"]
 SERVER = config["server"]
 PROJECT = config["project"]
 
+print("\033[94m")  # 🟦 ANSI escape code for blue color
+print("🟦🚀 Looking for any updates from Remote Github 🚀🟦")
 update_purge()
+print("\033[93m")  # 🟨 ANSI escape code for yellow color
+print("🟨🔍 Creating directories... 🔍🟨")
 __init_create_directory_structure()
 
+print("\033[90m")  # ANSI escape code for grey color for the rest 
 
 if __PURGE_LOG == True:
     __PURGE_FD = open(__PURGE_PATH_LOG_NAME, 'a')
