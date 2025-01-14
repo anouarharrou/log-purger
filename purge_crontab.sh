@@ -2,7 +2,7 @@
 
 PURGE_DIR="/home/harry/purger"
 LOG_FILE="$PURGE_DIR/cron_logs/cron_log_$(date +'%Y-%m-%d').log"
-CRITICAL_USAGE=75
+CRITICAL_USAGE=2
 FILESYSTEM="/dev/sdc"
 SMTP_HOST="smtp.gmail.com"
 SMTP_PORT=587
@@ -14,12 +14,12 @@ NICKNAME=$(hostname -I | awk '{print $1}')
 HOSTNAME=$(echo "$HOSTNAME")
 
 # Gmail credentials
-GMAIL_USER=""
-GMAIL_PASS=""  # Replace with your Gmail App Password
+SMTP_USER=""  # Replace with your SMTP EMAIL/USERNAME
+SMTP_PASS=""  # Replace with your SMTP Password
 
 # Email details
-MAIL_FROM="$GMAIL_USER"
-MAIL_TO=""
+MAIL_FROM="$SMTP_USER"
+MAIL_TO="receiver email"
 
 # Function to send email notifications
 send_email() {
@@ -38,7 +38,7 @@ send_email() {
         --mail-from "$MAIL_FROM" \
         --mail-rcpt "$MAIL_TO" \
         --upload-file "$temp_file" \
-        --user "$GMAIL_USER:$GMAIL_PASS" 2>&1)
+        --user "$SMTP_USER:$SMTP_PASS" 2>&1)
 
     local curl_status=$?
 
