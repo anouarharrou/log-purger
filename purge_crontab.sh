@@ -2,7 +2,7 @@
 
 PURGE_DIR="/home/harry/purger"
 LOG_FILE="$PURGE_DIR/cron_logs/cron_log_$(date +'%Y-%m-%d').log"
-CRITICAL_USAGE=2
+CRITICAL_USAGE=75
 FILESYSTEM="/dev/sdc"
 SMTP_HOST="smtp.gmail.com"
 SMTP_PORT=587
