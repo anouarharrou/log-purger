@@ -16,7 +16,7 @@ It offers customizable options through a configuration file, allowing users to t
 * Compression settings
 * Retention policies
 
-Additionally, Log Purger provides a bash script `check_disk_usage.sh`, which monitors disk usage and triggers the purge script when the usage exceeds a specified threshold. It can also send email notifications upon triggering.
+Additionally, Log Purger provides a bash script `purge_crontab.sh`, which monitors disk usage and triggers the purge script when the usage exceeds a specified threshold. It can also send email notifications upon triggering.
 
 ## Features
 
@@ -54,7 +54,7 @@ If you are using Google SMTP for email notifications, follow these steps:
 3. Run the script using the command: `python purge.py`
 4. Monitor the console or log files for status updates on processed logs and uploads to the S3 bucket.
 
-**Bash Script (`check_disk_usage.sh`):**
+**Bash Script (`purge_crontab.sh`):**
 
 1. Configure the script with your email server details and the desired disk usage threshold that triggers the script.
 2. Set up a cron job to schedule the script's execution (e.g., daily).
@@ -62,13 +62,13 @@ If you are using Google SMTP for email notifications, follow these steps:
 ## Cron Job Example
 
 ```bash
-# Run check_disk_usage.sh script daily at 12 PM
-0 12    * * *   root   /path/to/check_disk_usage.sh
+# Run purge_crontab.sh script daily at 12 PM
+0 12    * * *   root   ./path/to/purge_crontab.sh
 ```
 
 ## Important Note
 
- Make sure to replace /path/to/check_disk_usage.sh with the actual path to your check_disk_usage.sh script.
+ Make sure to replace /path/to/purge_crontab.sh with the actual path to your purge_crontab.sh script.
 
 
 ## Contributors

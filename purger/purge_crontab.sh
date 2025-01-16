@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PURGE_DIR="/home/harry/purger"
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+PURGE_DIR="$SCRIPT_DIR/purger"
 LOG_FILE="$PURGE_DIR/cron_logs/cron_log_$(date +'%Y-%m-%d').log"
 CRITICAL_USAGE=75
 FILESYSTEM="/dev/sdc"
