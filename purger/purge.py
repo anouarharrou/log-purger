@@ -29,12 +29,13 @@ __APP_NAME = "purge"
 __VERSION = "1.0.2"
 __GITHUB = "https://raw.githubusercontent.com/anouarharrou/log-purger/main/purge.py"
 __AUTO_UPDATE = True
-__PURGE_CONFIG_FILE = "./purge_config.json"
-__DEFAULT_PATH = "/home/harry/purger"
-__PURGE_PATH = "{}/purge".format(__DEFAULT_PATH)
-__PURGE_PATH_LOG = "{}/logs".format(__PURGE_PATH)
-__PURGE_PATH_LOG_NAME = "{}/logs/purge.log".format(__PURGE_PATH)
-__PURGE_PATH_DATA = "{}/data".format(__PURGE_PATH)
+__SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+__DEFAULT_PATH = f"{__SCRIPT_DIR}/purger"
+__PURGE_CONFIG_FILE = f"{__DEFAULT_PATH}/purge_config.json"
+__PURGE_PATH = f"{__DEFAULT_PATH}/purge"
+__PURGE_PATH_LOG = f"{__PURGE_PATH}/logs"
+__PURGE_PATH_LOG_NAME = f"{__PURGE_PATH}/logs/purge.log"
+__PURGE_PATH_DATA = f"{__PURGE_PATH}/data"
 __PURGE_ROTATE = True
 __PURGE_LOG = True
 __PURGE_FD = None
@@ -273,7 +274,7 @@ for service in services:
     try:
         log_path = service['log_path']
     except:
-        log_path = "/home/devops/logs"
+        log_path = f"{__DEFAULT_PATH}/logs"
 
     try:
         pattern = service['pattern']
