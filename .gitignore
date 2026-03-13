@@ -1,0 +1,18 @@
+# Credentials — never commit these
+.purge_secrets
+
+# Runtime directories created by the scripts
+purger/purge/
+purger/cron_logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Editor
+.vscode/
+.idea/
+*.swp

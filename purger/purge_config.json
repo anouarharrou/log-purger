@@ -1,18 +1,61 @@
 {
+    "_comment": "Log Purger v2 — Full configuration reference",
+  
     "config": {
-        "bucket": "bucket",
-        "key": "aws key",
-        "secret": "aws secret",
-        "server": "s3.{region}.amazonaws.com",
-        "project": "project name"
+      "bucket":  "your-s3-bucket-name",
+      "project": "your-project-name",
+  
+      "_credential_note": "Prefer IAM roles or env vars (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY). Only set key/secret here as a last resort.",
+      "key":    "",
+      "secret": "",
+      "region": "eu-west-1",
+  
+      "_server_note": "Optional — omit for standard AWS S3. Use for MinIO or custom endpoints.",
+      "server": "",
+  
+      "max_workers":    4,
+      "retry_attempts": 3,
+      "retry_wait_min": 2,
+      "retry_wait_max": 30,
+  
+      "storage_class": "STANDARD_IA",
+  
+      "dead_letter_path": "",
+  
+      "min_free_mb": 200,
+  
+      "dry_run":       false,
+      "verify_upload": true,
+  
+      "log_level": "INFO"
     },
+  
     "services": [
-        {
-            "service": "application name",
-            "log_path": "path/to/logs",
-            "pattern": "^service.log-.+",
-            "compress": "true",
-            "RemoveOnTransfer": "true"
+      {
+        "service":          "nginx",
+        "log_path":         "/var/log/nginx",
+        "pattern":          "^access\\.log.*",
+        "compress":         true,
+        "RemoveOnTransfer": true,
+        "enabled":          true,
+        "storage_class":    "STANDARD_IA",
+        "extra_tags": {
+          "team": "platform",
+          "env":  "production"
         }
+      },
+      {
+        "service":          "app-backend",
+        "log_path":         "/var/log/app",
+        "pattern":          "^app\\.log.*",
+        "compress":         true,
+        "RemoveOnTransfer": true,
+        "enabled":          true,
+        "storage_class":    "GLACIER_IR",
+        "extra_tags": {
+          "team": "backend",
+          "env":  "production"
+        }
+      }
     ]
   }
